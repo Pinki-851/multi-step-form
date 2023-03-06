@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html,
+:root {
+  font-size: 10px;
+}
+/* Base Styles */
+@layer base {
+  input[type='text'],
+  input[type='password'] {
+    @apply w-full h-[4rem] rounded-[4px] border-gray-300 bg-transparent py-[1.4rem]  px-[1.2rem] text-gray-800 shadow-extra-small text-reg-body placeholder:text-gray-400 placeholder:text-reg-body hover:bg-gray-200  focus:border-none focus:outline-none  focus-visible:ring-[2px] 
+    focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:border disabled:border-gray-200 disabled:bg-gray-200 disabled:text-gray-400;
+  }
+
+  button,
+  [type='button'],
+  [type='submit'] {
+    @apply disabled:cursor-not-allowed disabled:ring-0 disabled:bg-gray-300 bg-blue-07 text-white text-[1.4rem] h-[4rem] rounded-[4px] px-[1.6rem] focus:outline-none focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-blue-06 active:ring-[2px] active:ring-blue-06 ring-offset-2 hover:bg-blue-06;
+  }
+}
+.step-item:not(:first-child)::after {
+  @apply content-['']  right-2/4 absolute top-[.8rem] w-[230%] h-[2px] bg-gray-200 z-[2];
+}
+
+.complete:not(:first-child)::after {
+  @apply bg-blue-06;
+}

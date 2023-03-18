@@ -28,7 +28,7 @@ html,
   }
 }
 .step-item:not(:first-child)::after {
-  @apply content-['']  right-2/4 absolute top-[.8rem] w-[230%] h-[2px] bg-gray-200 z-[2];
+  @apply content-['']  right-2/4 absolute top-[.8rem] w-[25vw] sm:w-[30vw] xl:w-[16vw] h-[2px] bg-gray-200 z-[2];
 }
 
 .complete:not(:first-child)::after {

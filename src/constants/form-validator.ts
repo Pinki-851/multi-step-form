@@ -10,7 +10,7 @@ export const Validation_constant = {
     message: 'Invalid Email ID',
   },
   PASSWORD: {
-    value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+    value: /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/,
     message: 'Minimum 8 characters, atleast one letter,one digit and one special character',
   },
   ALPHA_NUMERIC: {

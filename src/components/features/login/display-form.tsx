@@ -3,7 +3,6 @@ import { Review } from './review';
 import { UserDetail } from './user-detail/user-detail';
 
 export function displayForm<T>(currentStep: T) {
-  console.log(currentStep, 'display');
   switch (currentStep) {
     case 1:
       return <UserDetail />;

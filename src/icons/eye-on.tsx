@@ -1,19 +1,21 @@
 import { SVGProps } from 'react';
 
-export function Check(props: SVGProps<SVGSVGElement>) {
+export function Eye(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='20'
-      height='20'
+      width='16'
+      height='16'
       viewBox='0 0 24 24'
       fill='none'
       stroke='currentColor'
-      strokeWidth='1.5'
+      strokeWidth='1'
       strokeLinecap='round'
       strokeLinejoin='round'
+      {...props}
     >
-      <polyline points='20 6 9 17 4 12'></polyline>
+      <path d='M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z'></path>
+      <circle cx='12' cy='12' r='3'></circle>
     </svg>
   );
 }

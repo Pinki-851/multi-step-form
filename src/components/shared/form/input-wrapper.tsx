@@ -8,7 +8,7 @@ export interface InputFieldWrapperProps extends HTMLAttributes<HTMLInputElement>
   children?: ReactNode;
   className?: string;
   error?: string | undefined | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | any;
-  type?: 'text' | 'number' | 'radio' | 'date' | 'url';
+  type?: 'text' | 'number' | 'radio' | 'date' | 'url' | 'password';
   value?: string;
   register: any;
   label: string;

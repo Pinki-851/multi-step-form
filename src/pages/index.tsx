@@ -5,13 +5,14 @@ import { StepController } from '@/features/login/step-controller';
 import { Stepper } from '@/features/login/stepper';
 import { CardLayout } from '@/shared/card-layout';
 import { isRequired } from '@/utils/check-required';
+import router from 'next/router';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 export default function Login() {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [formCompleted, setFormCompleted] = useState(false);
 
   function handlePrev() {
-    console.log(currentStep);
     setCurrentStep(prev => prev - 1);
   }
 
@@ -20,14 +21,16 @@ export default function Login() {
 
   async function handleNext() {
     let isValid = await isRequired(trigger, currentStep);
-    // console.log(currentStep, isValid);
     if (isValid) {
       setCurrentStep(prev => prev + 1);
     }
   }
 
   const onSubmit: SubmitHandler<any> = async (value: any) => {
-    console.log(value);
+    if (formCompleted) {
+      alert(JSON.stringify(value));
+      router.push({ pathname: '/wel-come', query: { name: value?.username } });
+    }
   };
 
   return (
@@ -37,14 +40,17 @@ export default function Login() {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {displayForm(currentStep)}
-
+          {/* </form> */}
           <StepController
             currentStep={currentStep}
             handleNext={() => {
               handleNext();
             }}
             handlePrev={() => handlePrev()}
-            // handleSave={() => handleSave()}
+            handleSave={() => {
+              setFormCompleted(true);
+              handleSubmit(onSubmit);
+            }}
           />
         </form>
       </FormProvider>

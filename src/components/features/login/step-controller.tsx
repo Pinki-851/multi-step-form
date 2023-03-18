@@ -4,9 +4,10 @@ interface SCProps {
   currentStep: number;
   handleNext: () => void;
   handlePrev: () => void;
+  handleSave: () => void;
 }
 export function StepController(props: SCProps) {
-  const { currentStep, handleNext, handlePrev } = props;
+  const { currentStep, handleNext, handlePrev, handleSave } = props;
   return (
     <div className='flex justify-end gap-[1.6rem] items-center'>
       <button
@@ -19,14 +20,18 @@ export function StepController(props: SCProps) {
         back
       </button>
 
-      <button
-        type={currentStep === steps.length ? 'submit' : 'button'}
-        onClick={() => {
-          handleNext();
-        }}
-      >
-        {currentStep === steps.length ? 'Save' : 'Next'}
-      </button>
+      {currentStep === steps.length ? (
+        <button onClick={() => handleSave()}>save</button>
+      ) : (
+        <button
+          type='button'
+          onClick={() => {
+            handleNext();
+          }}
+        >
+          Next
+        </button>
+      )}
     </div>
   );
 }

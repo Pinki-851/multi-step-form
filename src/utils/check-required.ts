@@ -7,7 +7,6 @@ export async function isRequired<T>(trigger: UseFormTrigger<FieldValues>, curren
 
   switch (currentStep) {
     case 1:
-      console.log(trigger([...Object.keys(initialVal)]));
       isValid = await trigger([...Object.keys(initialVal)]);
       break;
     case 2:

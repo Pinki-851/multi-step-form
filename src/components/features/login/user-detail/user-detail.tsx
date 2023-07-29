@@ -6,7 +6,7 @@ import { Eyeoff } from '@/icons/eye-off';
 import { Eye } from '@/icons/eye-on';
 import { FormFieldGroupWrapper, FormHeading, InputFieldWrapper } from '@/shared/form';
 import { StrengthChecker } from '../password/strength-checker';
-import { initialVal, LabelAndPlaceholder } from './form-config';
+import { LabelAndPlaceholder, initialVal } from './form-config';
 
 export function UserDetail() {
   const { register, formState } = useFormContext<typeof initialVal>();
@@ -51,7 +51,7 @@ export function UserDetail() {
             error={formState?.errors?.password?.message}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setPassword(e?.target?.value);
-              // setShowStrengthChecker(true);
+              setShowStrengthChecker(true);
             }}
           />
           <div

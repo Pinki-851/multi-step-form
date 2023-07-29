@@ -5,6 +5,7 @@ interface StrengthCheckerProps {
 }
 export function StrengthChecker(props: StrengthCheckerProps) {
   const { password } = props;
+  console.log(password, 'pa');
   const [errorMsg, setErrorMsg] = useState('');
   const [strength, setStrength] = useState({
     poorPassword: false,
@@ -22,6 +23,7 @@ export function StrengthChecker(props: StrengthCheckerProps) {
   const whiteSpace = whitespaceRegExp.test(password);
 
   useEffect(() => {
+    console.log('useeffect');
     checkStrength();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
@@ -49,8 +51,10 @@ export function StrengthChecker(props: StrengthCheckerProps) {
             ? '!bg-orange-300 !block'
             : strength.strongPassword
             ? '!bg-green-500 !block'
-            : '!bg-red-500 !block'
-        } w-full h-[5px] hidden rounded-[4px] bg-transparent `}
+            : strength.poorPassword
+            ? '!bg-red-500 !block'
+            : ' bg-transparent'
+        } w-full h-[5px] hidden rounded-[4px] `}
       ></div>
       <p className='text-reg-body-sm'>{errorMsg}</p>
     </Fragment>

@@ -29,7 +29,14 @@ export default function Login() {
   const onSubmit: SubmitHandler<any> = async (value: any) => {
     if (formCompleted) {
       alert(JSON.stringify(value));
-      router.push({ pathname: '/wel-come', query: { name: value?.username } });
+      const res = await fetch('/api/sign-up', { method: 'POST', body: JSON.stringify(value) });
+      console.log(res, 'login');
+      if (res.status === 200) {
+        router.push({
+          pathname: '/login',
+          query: { name: value?.username, email: value?.email, pass: value?.password },
+        });
+      }
     }
   };
 

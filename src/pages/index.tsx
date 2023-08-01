@@ -29,7 +29,7 @@ export default function Login() {
   const onSubmit: SubmitHandler<any> = async (value: any) => {
     if (formCompleted) {
       alert(JSON.stringify(value));
-      const res = await fetch('/api/sign-up', { method: 'POST', body: JSON.stringify(value) });
+      const res = await fetch('/api/user/sign-up', { method: 'POST', body: JSON.stringify(value) });
       console.log(res, 'login');
       if (res.status === 200) {
         router.push({

@@ -8,7 +8,7 @@ connect();
 export default async function signup(req: NextApiRequest, res: NextApiResponse) {
   try {
     console.log('request', req.body, 'req.method', req.method);
-    const { email, username, password, first_name, last_name } = req.body;
+    const { email, username, password, first_name, last_name, mobile } = req.body;
     if (!email || !username || !password || !first_name || !last_name) {
       return res.json({ message: 'all field are required', status: 400 });
     }
@@ -18,11 +18,12 @@ export default async function signup(req: NextApiRequest, res: NextApiResponse) 
     }
     const hasedPassword = await bcrypt.hash(password, 10);
 
-    console.log('req after hash', req.body);
+    // console.log('req after hash', req.body);
     const newUser = {
       personalDetails: {
         first_name,
         last_name,
+        mobile,
       },
       signUpDetails: {
         username,
@@ -30,11 +31,10 @@ export default async function signup(req: NextApiRequest, res: NextApiResponse) 
         password: hasedPassword,
       },
     };
-    console.log('new user', newUser);
     const user = await User.create({ ...newUser });
     return res.json({ message: 'user create successfully', status: 200, user });
   } catch (error: any) {
     console.log('signup-error', error);
-    return res.json({ error: error.message, status: 400 });
+    return res.json({ error: error.message, status: 500 });
   }
 }

@@ -1,3 +1,4 @@
+import { MONGOURL } from '@/constants/base-url';
 import mongoose from 'mongoose';
 
 const options = {
@@ -6,7 +7,7 @@ const options = {
 };
 export function connect() {
   try {
-    mongoose.connect(process.env.MONGO_URL!);
+    mongoose.connect(MONGOURL!);
     const connection = mongoose.connection;
     // console.log('connection', connection);
     connection.on('connected', () => {

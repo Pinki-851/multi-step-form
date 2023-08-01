@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const personalDetailsSchema = new mongoose.Schema({
   first_name: { type: String },
   last_name: { type: String },
+  mobile: { type: Number },
 });
 
 // Define the main schema

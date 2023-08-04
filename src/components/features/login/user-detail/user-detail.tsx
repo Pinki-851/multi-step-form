@@ -46,7 +46,7 @@ export function UserDetail() {
             placeholder={LabelAndPlaceholder?.password?.placeholder}
             register={register('password', {
               required: 'Required filed',
-              pattern: Validation_constant.PASSWORD,
+              // pattern: Validation_constant.PASSWORD,
             })}
             error={formState?.errors?.password?.message}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {

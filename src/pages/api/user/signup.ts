@@ -9,10 +9,12 @@ export default async function signup(req: NextApiRequest, res: NextApiResponse) 
   try {
     console.log('request', req.body, 'req.method', req.method);
     const { email, username, password, first_name, last_name, mobile } = req.body;
-    if (!email || !username || !password || !first_name || !last_name) {
+    console.log('check', email, username, password, first_name, last_name, mobile);
+    if (!email || !username || !password) {
       return res.json({ message: 'all field are required', status: 400 });
     }
     const currentUser = await User.findOne({ email });
+    console.log('currentUser', currentUser);
     if (currentUser) {
       return res.json({ message: 'user already exist', status: 400 });
     }
@@ -32,6 +34,7 @@ export default async function signup(req: NextApiRequest, res: NextApiResponse) 
       },
     };
     const user = await User.create({ ...newUser });
+    console.log('user', user);
     return res.json({ message: 'user create successfully', status: 200, user });
   } catch (error: any) {
     console.log('signup-error', error);

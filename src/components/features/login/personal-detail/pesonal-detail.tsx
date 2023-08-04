@@ -12,20 +12,20 @@ export function PersonalDetail() {
       <FormFieldGroupWrapper className='mb-[1.6rem]'>
         <InputFieldWrapper
           isRequired={true}
-          label={LabelAndPlaceholder?.firstname?.label}
-          placeholder={LabelAndPlaceholder?.firstname?.placeholder}
-          register={register('firstname', { required: 'Required filed' })}
-          error={formState?.errors?.firstname?.message}
+          label={LabelAndPlaceholder?.first_name?.label}
+          placeholder={LabelAndPlaceholder?.first_name?.placeholder}
+          register={register('first_name', { required: 'Required filed' })}
+          error={formState?.errors?.first_name?.message}
         />
         <InputFieldWrapper
           isRequired={true}
-          label={LabelAndPlaceholder?.lastname?.label}
-          placeholder={LabelAndPlaceholder?.lastname?.placeholder}
-          register={register('lastname', {
+          label={LabelAndPlaceholder?.last_name?.label}
+          placeholder={LabelAndPlaceholder?.last_name?.placeholder}
+          register={register('last_name', {
             required: 'Required filed',
             pattern: Validation_constant.ALPHABETS,
           })}
-          error={formState?.errors?.lastname?.message}
+          error={formState?.errors?.last_name?.message}
         />
         <InputFieldWrapper
           isRequired={true}

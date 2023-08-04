@@ -1,8 +1,10 @@
 import { Validation_constant } from '@/constants/form-validator';
 import { Eyeoff } from '@/icons/eye-off';
 import { Eye } from '@/icons/eye-on';
+import { API_URL } from '@/services/form';
 import { CardLayout } from '@/shared/card-layout';
 import { FormFieldGroupWrapper, FormHeading, InputFieldWrapper } from '@/shared/form';
+import { sendData } from '@/utils/send-data';
 import router, { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -23,8 +25,16 @@ export default function Login() {
 
   const { handleSubmit, formState, register } = methods;
   const onSubmit: SubmitHandler<any> = async (value: any) => {
-    // console.log('', value, email === value?.email, pass === value?.password, pass, email);
-    if (email === value?.email && pass === value?.password) {
+    const res = await sendData({ url: API_URL.LOGIN, body: value, method: 'POST' });
+    // const res = await fetch('/api/user/login', {
+    //   method: 'POST',
+    //   body: JSON.stringify(value),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
+    // if (email === value?.email && pass === value?.password) {
+    if (res.status === 200) {
       router.push({
         pathname: '/wel-come',
         query: { name },
@@ -55,7 +65,7 @@ export default function Login() {
               placeholder={'Enter password'}
               register={register('password', {
                 required: 'Required filed',
-                pattern: Validation_constant.PASSWORD,
+                // pattern: Validation_constant.PASSWORD,
               })}
               error={formState?.errors?.password?.message}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {

@@ -5,7 +5,6 @@ import { StepController } from '@/features/login/step-controller';
 import { Stepper } from '@/features/login/stepper';
 import { CardLayout } from '@/shared/card-layout';
 import { isRequired } from '@/utils/check-required';
-import router from 'next/router';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 export default function Login() {
@@ -28,14 +27,20 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<any> = async (value: any) => {
     if (formCompleted) {
-      alert(JSON.stringify(value));
-      const res = await fetch('/api/user/sign-up', { method: 'POST', body: JSON.stringify(value) });
+      // alert(JSON.stringify(value));
+      console.log('signup-front', value);
+      const res = await fetch('/api/user/signup', {
+        method: 'POST',
+        body: JSON.stringify(value),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       console.log(res, 'login');
       if (res.status === 200) {
-        router.push({
-          pathname: '/login',
-          query: { name: value?.username, email: value?.email, pass: value?.password },
-        });
+        // router.push({
+        //   pathname: '/login',
+        // });
       }
     }
   };

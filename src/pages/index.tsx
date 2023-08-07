@@ -1,71 +1,35 @@
-import { useState } from 'react';
+import { sessionLogout } from '@/lib/i-logout';
+import { sessionOptions } from '@/lib/i-session';
+import { withIronSessionSsr } from 'iron-session/next';
 
-import { displayForm } from '@/features/login/display-form';
-import { StepController } from '@/features/login/step-controller';
-import { Stepper } from '@/features/login/stepper';
-import { CardLayout } from '@/shared/card-layout';
-import { isRequired } from '@/utils/check-required';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-
-export default function Login() {
-  const [currentStep, setCurrentStep] = useState<number>(1);
-  const [formCompleted, setFormCompleted] = useState(false);
-
-  function handlePrev() {
-    setCurrentStep(prev => prev - 1);
+export default function WelCome() {
+  async function handleLogout() {
+    await sessionLogout();
   }
-
-  const methods = useForm();
-  const { handleSubmit, trigger } = methods;
-
-  async function handleNext() {
-    let isValid = await isRequired(trigger, currentStep);
-    if (isValid) {
-      setCurrentStep(prev => prev + 1);
-    }
-  }
-
-  const onSubmit: SubmitHandler<any> = async (value: any) => {
-    if (formCompleted) {
-      // alert(JSON.stringify(value));
-      console.log('signup-front', value);
-      const res = await fetch('/api/user/signup', {
-        method: 'POST',
-        body: JSON.stringify(value),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log(res, 'login');
-      if (res.status === 200) {
-        // router.push({
-        //   pathname: '/login',
-        // });
-      }
-    }
-  };
-
   return (
-    <CardLayout>
-      <Stepper currentStep={currentStep} />
-
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {displayForm(currentStep)}
-          {/* </form> */}
-          <StepController
-            currentStep={currentStep}
-            handleNext={() => {
-              handleNext();
-            }}
-            handlePrev={() => handlePrev()}
-            handleSave={() => {
-              setFormCompleted(true);
-              handleSubmit(onSubmit);
-            }}
-          />
-        </form>
-      </FormProvider>
-    </CardLayout>
+    <div className='text-white text-med-body flex flex-col gap-[1.6rem]'>
+      Wel-come !!
+      <button
+        className='text-blue-06 bg-white hover:bg-white hover:text-blue-08'
+        onClick={() => {
+          handleLogout();
+        }}
+      >
+        Log out
+      </button>
+    </div>
   );
 }
+export const getServerSideProps = withIronSessionSsr(async function ({ req, res }) {
+  const user = req.session.user;
+  console.log('user', user);
+  if (user === undefined) {
+    return {
+      redirect: { destination: '/flow/login', permanent: false },
+    };
+  }
+
+  return {
+    props: { user: req.session.user ?? null },
+  };
+}, sessionOptions);

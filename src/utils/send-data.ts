@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+
+import toast from 'react-hot-toast';
 interface SendDataProps {
   url: string;
   body?: any;
@@ -44,25 +46,22 @@ export const sendData = async (props: SendDataProps) => {
     // signal: controller.signal,
   })
     .then(response => {
+      console.log('sendData res', response);
       if (response.status === 200) {
         console.log('response', response);
         if (showToast) {
-          //   toastMessage
-          //     ? toastMessage
-          //     : toast.success(operationNotificationString[operation]);
+          toastMessage ? toastMessage : toast.success(operationNotificationString[operation]);
         }
       }
       if (response.status === 403) {
         if (showToast) {
-          //   toast.error('You are not authorized to perform this action');
+          toast.error('You are not authorized to perform this action');
         }
         console.error(response);
       }
       if (response.status === 400) {
         if (showToast) {
-          //   toast.error(
-          //     `Data entered is invalid or a required field is missing ${response.text}`,
-          //   );
+          toast.error(`Data entered is invalid or a required field is missing ${response.text}`);
         }
       }
       return response.json();
@@ -72,7 +71,7 @@ export const sendData = async (props: SendDataProps) => {
     })
     .catch(error => {
       console.error(error);
-      // toast.error(`Operation failed ${error}`);
+      toast.error(`Operation failed ${error}`);
     });
   // clearTimeout(timer);
 

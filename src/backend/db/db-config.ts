@@ -9,7 +9,7 @@ export function connect() {
   try {
     mongoose.connect(MONGOURL!);
     const connection = mongoose.connection;
-    console.log('connection', connection);
+    console.log('connection');
     connection.on('connected', () => {
       console.log('Mongodb connected successfully');
       connection.on('error', err => {

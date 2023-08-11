@@ -6,6 +6,8 @@ import { API_URL } from '@/services/form';
 import { CardLayout } from '@/shared/card-layout';
 import { FormFieldGroupWrapper, FormHeading, InputFieldWrapper } from '@/shared/form';
 import { sendData } from '@/utils/send-data';
+import Cookies from 'js-cookie';
+import Link from 'next/link';
 import router, { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -35,9 +37,9 @@ export default function Login() {
       method: 'POST',
       showToast: false,
     });
-
     if (res?.token) {
-      localStorage.setItem('multi', res?.multi);
+      // localStorage.setItem('multi', res?.multi);
+      Cookies.set('multi', res?.token);
       toast.success('successfully login');
       setLoading(false);
       router.push('/');
@@ -105,6 +107,13 @@ export default function Login() {
             </button>
           </FormFieldGroupWrapper>
         </form>
+
+        <p className='text-center py-[2rem] text-[1.2rem]'>
+          Don't have an account?{' '}
+          <Link href={'/flow/signup'} className='text-indigo-600 font-medium'>
+            Sign Up
+          </Link>{' '}
+        </p>
       </CardLayout>
     </div>
   );

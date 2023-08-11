@@ -21,7 +21,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const { email, password } = req.body;
-    console.log('login-api', email, password);
+    // console.log('login-api', email, password);
     if (!email || !password) {
       return res.status(400).json({ message: 'please enter email and password' });
     }
@@ -44,7 +44,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       password: user.signUpDetails.password,
     };
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const token = jwt.sign({ data: payload }, TOKEN_SECRET!, { expiresIn: '1h' });
+    const token = jwt.sign({ data: payload }, TOKEN_SECRET!, { expiresIn: '1d' });
     // res.setHeader('Set-Cookie', `token=${token}; HttpOnly`);
     const userData = {
       isLoggedIn: true,

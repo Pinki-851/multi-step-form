@@ -7,6 +7,7 @@ import { API_URL } from '@/services/form';
 import { CardLayout } from '@/shared/card-layout';
 import { isRequired } from '@/utils/check-required';
 import { sendData } from '@/utils/send-data';
+import Link from 'next/link';
 import router from 'next/router';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -70,6 +71,13 @@ export default function Login() {
           />
         </form>
       </FormProvider>
+
+      <p className='text-center py-[2rem] text-[1.2rem]'>
+        Already have account?{' '}
+        <Link href={'/flow/login'} className='text-indigo-600 font-medium'>
+          Log in
+        </Link>{' '}
+      </p>
     </CardLayout>
   );
 }

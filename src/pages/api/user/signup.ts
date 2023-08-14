@@ -1,5 +1,6 @@
 import { connect } from '@/backend/db/db-config';
 import User from '@/backend/model/userModel';
+import { sendMail } from '@/utils/send-email';
 import bcrypt from 'bcryptjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -34,6 +35,9 @@ export default async function signup(req: NextApiRequest, res: NextApiResponse) 
       },
     };
     const user = await User.create({ ...newUser });
+
+    // send verification mail
+    await sendMail({ email: req.body.email, emailType: 'VERIFY', userId: user._id });
     console.log('user', user);
     return res.json({ message: 'user create successfully', status: 200, user });
   } catch (error: any) {

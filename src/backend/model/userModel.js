@@ -11,12 +11,16 @@ const signUpSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  isVerified: { type: Boolean, default: false },
 });
 const UserSchema = new mongoose.Schema(
   {
     signUpDetails: signUpSchema,
     personalDetails: personalDetailsSchema,
+    isVerified: { type: Boolean, default: false },
+    forgotPasswordToken: { type: String, default: '' },
+    forgotPasswordTokenExpiry: { type: Date },
+    verifyToken: { type: String, default: '' },
+    verifyTokenExpiry: { type: Date },
   },
   { timestamps: true },
 );

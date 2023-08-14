@@ -5,6 +5,7 @@ import { sessionOptions } from '@/lib/i-session';
 import { withIronSessionSsr } from 'iron-session/next';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function WelCome() {
   const [userData, setUserData] = useState<any>();
@@ -21,12 +22,19 @@ export default function WelCome() {
       },
     });
     const finalres = await res.json();
+    if (finalres?.status === 500) {
+      toast.error(finalres?.error);
+    }
     setUserData(finalres);
     // console.log('res', res, finalres);
   }
   useEffect(() => {
     fetchUserDetail();
   }, []);
+
+  if (Cookies.get('multi') === undefined) {
+    handleLogout();
+  }
   if (!userData) {
     return <Spinner className='w-[10rem] h-[10rem] fill-white' />;
   }

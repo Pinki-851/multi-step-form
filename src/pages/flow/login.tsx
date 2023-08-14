@@ -1,3 +1,4 @@
+import { AppLink } from '@/constants/app-links';
 import { Validation_constant } from '@/constants/form-validator';
 import { Eyeoff } from '@/icons/eye-off';
 import { Eye } from '@/icons/eye-on';
@@ -81,6 +82,13 @@ export default function Login() {
                   setPassword(e?.target?.value);
                 }}
               />
+              <Link
+                href={AppLink.forgot_pass}
+                className='absolute top-0 right-0 text-med-body-sm text-blue-06'
+              >
+                forgot password?
+              </Link>
+
               <div
                 onClick={() => {
                   setShowEye(!showEye);

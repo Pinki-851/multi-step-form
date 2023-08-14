@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { AppLink } from '@/constants/app-links';
 import { displayForm } from '@/features/login/display-form';
 import { StepController } from '@/features/login/step-controller';
 import { Stepper } from '@/features/login/stepper';
@@ -41,10 +42,11 @@ export default function Login() {
       //     'Content-Type': 'application/json',
       //   },
       // });
+      // TODO:when everything is completed donot take user in login make sure token is provided here
       console.log(res, 'login');
       if (res) {
         router.push({
-          pathname: '/login',
+          pathname: AppLink.LOGIN,
         });
       }
     }

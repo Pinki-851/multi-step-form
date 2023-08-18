@@ -17,8 +17,9 @@ export default async function ChangePassReq(req: NextApiRequest, res: NextApiRes
     }
 
     await sendMail({ email: req.body.email, emailType: 'RESET', userId: user?.[0]?._id as string });
+    
     return res.status(200).json({ message: 'change pass requested' });
   } catch (error: any) {
-    return res.json({ error: error.message, status: 500 });
+    return res.status(500).json({ error: error.message, status: 500 });
   }
 }

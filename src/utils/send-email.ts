@@ -12,7 +12,7 @@ export const sendMail = async ({
   userId: string;
 }) => {
   try {
-    // console.log('sendEmil called', userId);
+    console.log('sendEmil called', userId);
     const hashedToken = await bcryptjs.hash(userId.toString(), 10);
 
     if (emailType === 'VERIFY') {
@@ -30,8 +30,9 @@ export const sendMail = async ({
     }
     // console.log('sendMail-user', await User.findOne({ _id: userId }));
     const transport = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      // host: 'sandbox.smtp.mailtrap.io',
+      service: 'gmail',
+      // port: 2525,
       auth: {
         user: process.env.NEXT_PUBLIC_NODE_USER,
         pass: process.env.NEXT_PUBLIC_NODE_PASS,
@@ -39,7 +40,7 @@ export const sendMail = async ({
     });
 
     const mailOptions = {
-      from: 'pinki@gmail.com',
+      from: 'pinkisarojtest@gmail.com',
       to: email,
       subject: emailType === 'VERIFY' ? 'Verfy your email' : 'Reset your password',
       html: `<p>Click ${
@@ -56,6 +57,7 @@ export const sendMail = async ({
     };
 
     const mailResponse = await transport.sendMail(mailOptions);
+    // console.log('mailres', mailResponse);
     return mailResponse;
   } catch (error: any) {
     throw new Error(error.message);

@@ -46,7 +46,7 @@ export default function Login() {
       console.log(res, 'login');
       if (res) {
         router.push({
-          pathname: AppLink.LOGIN,
+          pathname: AppLink.VERIFY_MAIL_MESSAGE,
         });
       }
     }

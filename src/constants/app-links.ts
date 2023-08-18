@@ -5,4 +5,5 @@ export const AppLink = {
   forgot_pass: '/flow/forgot-password',
   WELCOME: '/',
   VERIFY_EMAIL: '/flow/verify-email',
+  VERIFY_MAIL_MESSAGE: '/flow/verify-mail-message',
 };

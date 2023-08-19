@@ -1,5 +1,6 @@
 import User from '@/backend/model/userModel';
-import bcryptjs from 'bcryptjs';
+import { TOKEN_SECRET } from '@/constants/base-url';
+import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 
 export const sendMail = async ({
@@ -13,26 +14,32 @@ export const sendMail = async ({
 }) => {
   try {
     console.log('sendEmil called', userId);
-    const hashedToken = await bcryptjs.hash(userId.toString(), 10);
+
+    // const hashedToken = await bcryptjs.hash(userId.toString(), 10);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const hashedToken = jwt.sign({ user_id: userId?.toString() }, TOKEN_SECRET!, {
+      expiresIn: '30m',
+    });
 
     if (emailType === 'VERIFY') {
       await User.findByIdAndUpdate(userId, {
         verifyToken: hashedToken,
-        verifyTokenExpiry: Date.now() + 3600000,
+        // verifyTokenExpiry: Date.now() + 3600000,
       });
     } else if (emailType === 'RESET') {
       // console.log('sendEmil called-reset', userId);
 
       await User.findByIdAndUpdate(userId, {
         forgotPasswordToken: hashedToken,
-        forgotPasswordTokenExpiry: Date.now() + 3600000,
+        // forgotPasswordTokenExpiry: Date.now() + 3600000,
       });
     }
     // console.log('sendMail-user', await User.findOne({ _id: userId }));
     const transport = nodemailer.createTransport({
+      // host and port is for mailtrap
       // host: 'sandbox.smtp.mailtrap.io',
-      service: 'gmail',
       // port: 2525,
+      service: 'gmail',
       auth: {
         user: process.env.NEXT_PUBLIC_NODE_USER,
         pass: process.env.NEXT_PUBLIC_NODE_PASS,
@@ -51,7 +58,11 @@ export const sendMail = async ({
     to ${
       emailType === 'VERIFY' ? 'verify your emial' : 'reset your password'
     } or copy paste link below in your browser
-      ${process.env.DOMAIN}/flow/verify-email?token=${hashedToken}
+     ${
+       emailType === 'VERIFY'
+         ? `${process.env.DOMAIN}/flow/verify-email?token=${hashedToken}`
+         : `${process.env.DOMAIN}/flow/forgot-password/new-password?token=${hashedToken}`
+     } this is valid for 30 min only
       
       </p>`,
     };

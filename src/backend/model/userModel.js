@@ -18,9 +18,9 @@ const UserSchema = new mongoose.Schema(
     personalDetails: personalDetailsSchema,
     isVerified: { type: Boolean, default: false },
     forgotPasswordToken: { type: String, default: '' },
-    forgotPasswordTokenExpiry: { type: Date },
+    // forgotPasswordTokenExpiry: { type: Date },
     verifyToken: { type: String, default: '' },
-    verifyTokenExpiry: { type: Date },
+    // verifyTokenExpiry: { type: Date },
   },
   { timestamps: true },
 );

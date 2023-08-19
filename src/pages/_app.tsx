@@ -6,7 +6,11 @@ import '../styles/global.css';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Layout>
-      <Toaster position='bottom-right' reverseOrder={false} />
+      <Toaster
+        position='bottom-right'
+        reverseOrder={false}
+        toastOptions={{ className: ' px-[2rem]' }}
+      />
       <Component {...pageProps} />
     </Layout>
   );

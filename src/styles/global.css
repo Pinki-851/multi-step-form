@@ -24,7 +24,7 @@ html,
   button,
   [type='button'],
   [type='submit'] {
-    @apply disabled:cursor-not-allowed disabled:ring-0 disabled:bg-gray-300 bg-blue-07 text-white text-[1.4rem] h-[4rem] rounded-[4px] px-[1.6rem] focus:outline-none focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-blue-06 active:ring-[2px] active:ring-blue-06 ring-offset-2 hover:bg-blue-06;
+    @apply flex justify-center items-center gap-[.8rem] disabled:cursor-not-allowed disabled:ring-0 disabled:bg-gray-300 bg-blue-07 text-white text-[1.4rem] h-[4rem] rounded-[4px] px-[1.6rem] focus:outline-none focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-blue-06 active:ring-[2px] active:ring-blue-06 ring-offset-2 hover:bg-blue-06;
   }
 }
 .step-item:not(:first-child)::after {

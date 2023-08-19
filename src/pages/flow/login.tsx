@@ -23,7 +23,7 @@ export default function Login() {
 
   const { push } = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  console.log('prod', MONGOURL!);
+  console.log('prod', MONGOURL!, process.env.NEXT_PUBLIC_NODE_USER);
   const methods = useForm({
     defaultValues: initialVal,
     mode: 'onChange',

@@ -1,5 +1,5 @@
 import User from '@/backend/model/userModel';
-import { TOKEN_SECRET } from '@/constants/base-url';
+import { DOMAIN, TOKEN_SECRET, USER_NAME, USER_PASSWORD } from '@/constants/base-url';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 
@@ -41,8 +41,8 @@ export const sendMail = async ({
       // port: 2525,
       service: 'gmail',
       auth: {
-        user: process.env.NEXT_PUBLIC_NODE_USER,
-        pass: process.env.NEXT_PUBLIC_NODE_PASS,
+        user: USER_NAME,
+        pass: USER_PASSWORD,
       },
     });
 
@@ -52,16 +52,16 @@ export const sendMail = async ({
       subject: emailType === 'VERIFY' ? 'Verfy your email' : 'Reset your password',
       html: `<p>Click ${
         emailType === 'VERIFY'
-          ? `  <a href="${process.env.DOMAIN}/flow/verify-email?token=${hashedToken}">here</a> `
-          : `  <a href="${process.env.DOMAIN}/flow/forgot-password/new-password?token=${hashedToken}">here</a> `
+          ? `  <a href="${DOMAIN}/flow/verify-email?token=${hashedToken}">here</a> `
+          : `  <a href="${DOMAIN}/flow/forgot-password/new-password?token=${hashedToken}">here</a> `
       }
     to ${
       emailType === 'VERIFY' ? 'verify your emial' : 'reset your password'
     } or copy paste link below in your browser
      ${
        emailType === 'VERIFY'
-         ? `${process.env.DOMAIN}/flow/verify-email?token=${hashedToken}`
-         : `${process.env.DOMAIN}/flow/forgot-password/new-password?token=${hashedToken}`
+         ? `${DOMAIN}/flow/verify-email?token=${hashedToken}`
+         : `${DOMAIN}/flow/forgot-password/new-password?token=${hashedToken}`
      } this is valid for 30 min only
       
       </p>`,

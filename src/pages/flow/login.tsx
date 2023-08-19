@@ -1,4 +1,5 @@
 import { AppLink } from '@/constants/app-links';
+import { MONGOURL } from '@/constants/base-url';
 import { Validation_constant } from '@/constants/form-validator';
 import { Eyeoff } from '@/icons/eye-off';
 import { Eye } from '@/icons/eye-on';
@@ -20,9 +21,9 @@ export default function Login() {
   const [showEye, setShowEye] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { query, push } = useRouter();
-  const { email, pass, name } = query;
-
+  const { push } = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  console.log('prod', MONGOURL!);
   const methods = useForm({
     defaultValues: initialVal,
     mode: 'onChange',

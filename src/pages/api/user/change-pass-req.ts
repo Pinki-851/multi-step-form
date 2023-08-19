@@ -11,13 +11,14 @@ export default async function ChangePassReq(req: NextApiRequest, res: NextApiRes
     }
     const { email } = req.body;
     // how to get rid with this array
-    const user = await User.find({ 'signUpDetails.email': email });
+    const user = await User.findOne({ 'signUpDetails.email': email });
+
     if (!user) {
       return res.status(400).json({ message: 'no user found with this emial' });
     }
 
-    await sendMail({ email: req.body.email, emailType: 'RESET', userId: user?.[0]?._id as string });
-    
+    await sendMail({ email: req.body.email, emailType: 'RESET', userId: user?._id as string });
+
     return res.status(200).json({ message: 'change pass requested' });
   } catch (error: any) {
     return res.status(500).json({ error: error.message, status: 500 });

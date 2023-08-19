@@ -46,6 +46,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const token = jwt.sign({ data: payload }, TOKEN_SECRET!, { expiresIn: '1d' });
     // res.setHeader('Set-Cookie', `token=${token}; HttpOnly`);
+    console.log('user-login', user);
     const userData = {
       isLoggedIn: true,
       message: 'login succesfull',
@@ -53,11 +54,16 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       pass: user.signUpDetails.password,
       token,
     };
-    // this is for cookie in normal api we will not use this two line
-    req.session.user = userData;
-    await req.session.save();
+    if (user?.isVerified) {
+      req.session.user = userData;
+      await req.session.save();
 
-    return res.status(200).json(userData);
+      return res.status(200).json(userData);
+    }
+    // this is for cookie in normal api we will not use this two line
+    return res
+      .status(400)
+      .json({ message: 'user not verified. Please verify your mail for logn ' });
   } catch (error: any) {
     console.log('login-error', error);
     return res.json({ error: error.message, status: 500 });

@@ -1,3 +1,4 @@
+import { Spinner } from '@/icons/spinner';
 import { steps } from './steps';
 
 interface SCProps {
@@ -5,9 +6,10 @@ interface SCProps {
   handleNext: () => void;
   handlePrev: () => void;
   handleSave: () => void;
+  loadng?: boolean;
 }
 export function StepController(props: SCProps) {
-  const { currentStep, handleNext, handlePrev, handleSave } = props;
+  const { currentStep, handleNext, handlePrev, handleSave, loadng = false } = props;
   return (
     <div className='flex justify-end gap-[1.6rem] items-center'>
       <button
@@ -21,7 +23,16 @@ export function StepController(props: SCProps) {
       </button>
 
       {currentStep === steps.length ? (
-        <button onClick={() => handleSave()}>save</button>
+        <button onClick={() => handleSave()} disabled={loadng}>
+          {loadng ? (
+            <>
+              <Spinner className='w-[1.6rem] h-[1.6rem] fill-white' />
+              Processing...
+            </>
+          ) : (
+            'save'
+          )}
+        </button>
       ) : (
         <button
           type='button'

@@ -1,18 +1,23 @@
 import { AppLink } from '@/constants/app-links';
 import { API_URL } from '@/services/form';
+import { ButtonWithLoading } from '@/shared/button-with-loading';
 import { CardLayout } from '@/shared/card-layout';
 import { FormHeading } from '@/shared/form';
 import { SEO } from '@/shared/seo';
 import Link from 'next/link';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { ghostbtnStyle } from './new-password';
 
 interface CMProps {
   data: any;
 }
 export default function CheckMail(props: CMProps) {
   const { data } = props;
+  const [loading, setLoading] = useState(false);
 
   async function resendMail() {
+    setLoading(true);
     const url = API_URL.CHANGE_PASSWORD_REQUEST;
 
     const res: any = await fetch(url, {
@@ -28,6 +33,7 @@ export default function CheckMail(props: CMProps) {
     }
     // console.log('res', res);
     if (res?.status === 200) {
+      setLoading(false);
       toast.success('Email sent successfully');
     }
   }
@@ -35,21 +41,9 @@ export default function CheckMail(props: CMProps) {
     <div>
       {' '}
       <SEO title='Check email' />
-      <CardLayout>
+      <CardLayout className='max-w-[36rem] p-[3.2rem]'>
         <FormHeading className='!text-bold-sub-01 !mt-0'>Check email</FormHeading>
 
-        {/* <LoginContainer
-        heading='Check email'
-        helperText={
-          <>
-            <span>
-              Please check your email <strong>{data?.email}</strong>, we have sent an email that
-              contains a link to reset your password.
-            </span>
-            <br />
-          </>
-        }
-      > */}
         <p className='text-reg-body'>
           Please check your email <strong>{data?.email}</strong>, we have sent an email that
           contains a link to reset your password.
@@ -57,17 +51,15 @@ export default function CheckMail(props: CMProps) {
         <br />
 
         <div className='mt-[6rem] flex w-full flex-col items-center justify-center gap-[.8rem]'>
-          <button
-            className='mx-auto mt-[.8rem] w-full'
+          <ButtonWithLoading
+            loading={loading}
+            btnText='Resend email'
             onClick={() => {
               resendMail();
             }}
-          >
-            Resend email
-          </button>
-
+          />
           <Link href={AppLink?.LOGIN} passHref className='w-full'>
-            <button type='submit' className='w-full'>
+            <button type='submit' className={`w-full ${ghostbtnStyle}`}>
               Go to login{' '}
             </button>
           </Link>

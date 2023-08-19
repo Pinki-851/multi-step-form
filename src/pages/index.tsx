@@ -12,7 +12,6 @@ export default function WelCome() {
   async function handleLogout() {
     await sessionLogout();
   }
-  // console.log('welcome', Cookies.get('multi'));
   async function fetchUserDetail() {
     const res = await fetch('/api/user/user-detail', {
       method: 'GET',

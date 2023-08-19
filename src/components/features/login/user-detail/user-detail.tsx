@@ -19,12 +19,13 @@ export function UserDetail() {
       <FormHeading>User details</FormHeading>
       <FormFieldGroupWrapper className='mb-[1.6rem]'>
         <InputFieldWrapper
+          autoComplete={'off'}
           isRequired={true}
           label={LabelAndPlaceholder?.username?.label}
           placeholder={LabelAndPlaceholder?.username?.placeholder}
           register={register('username', {
             required: 'Required filed',
-            pattern: Validation_constant?.ALPHABETS,
+            // pattern: Validation_constant?.ALPHABETS,
           })}
           error={formState?.errors?.username?.message}
         />

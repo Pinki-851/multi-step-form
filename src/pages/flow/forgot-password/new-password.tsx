@@ -1,10 +1,12 @@
 import { AppLink } from '@/constants/app-links';
 import { API_URL } from '@/services/form';
+import { ButtonWithLoading } from '@/shared/button-with-loading';
 import { CardLayout } from '@/shared/card-layout';
 import { FormHeading, InputFieldWrapper } from '@/shared/form';
 import { SEO } from '@/shared/seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 const initialValue = {
@@ -14,6 +16,7 @@ const initialValue = {
 
 export default function NewPassword() {
   const { push, query } = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const token: any = query?.token
     ? query?.token
@@ -29,6 +32,7 @@ export default function NewPassword() {
     new_password: string;
     confirm_password: string;
   }> = async value => {
+    setLoading(true);
     const { confirm_password, new_password } = value;
     const call_api = new_password === confirm_password ? true : false;
 
@@ -36,10 +40,6 @@ export default function NewPassword() {
     if (call_api) {
       const sendRes = { token: token, password: new_password };
       const url = API_URL.CHANGE_PASSWORD;
-      // const myHeaders = new Headers({
-      //   'Content-Type': 'application/json',
-      //   Authorization: localStorage.getItem('mfsClient') ?? '',
-      // });
 
       const res: any = await fetch(url, {
         method: 'POST',
@@ -49,6 +49,7 @@ export default function NewPassword() {
         },
       });
       if (res?.status === 200) {
+        setLoading(false);
         toast.success(res?.message);
 
         push(AppLink?.forgot_pass_success);
@@ -87,13 +88,10 @@ export default function NewPassword() {
             className='mt-[3.2rem]'
           />
 
-          {/* <Link href={AppLinks?.forgot_pass?.check_mail} passHref> */}
-          <button type='submit' className='mt-[3.2rem] w-full'>
-            Reset password
-          </button>
-          {/* </Link> */}
+          <ButtonWithLoading btnText='Reset password' loading={loading} />
+
           <Link href={AppLink.LOGIN} passHref>
-            <button type='submit' className='mt-[.8rem] w-full'>
+            <button type='submit' className={`mt-[.8rem] w-full  ${ghostbtnStyle}`}>
               Back to login
             </button>
           </Link>
@@ -102,3 +100,6 @@ export default function NewPassword() {
     </div>
   );
 }
+
+export const ghostbtnStyle =
+  'bg-transparent hover:bg-indigo-200 transition-all duration-300 ease-in-out text-blue-06 hover:text-white';

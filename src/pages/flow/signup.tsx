@@ -11,10 +11,12 @@ import { sendData } from '@/utils/send-data';
 import Link from 'next/link';
 import router from 'next/router';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [formCompleted, setFormCompleted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handlePrev() {
     setCurrentStep(prev => prev - 1);
@@ -32,9 +34,15 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<any> = async (value: any) => {
     if (formCompleted) {
+      setLoading(true);
       // alert(JSON.stringify(value));
       console.log('signup-front', value);
-      const res = await sendData({ url: API_URL.SIGNUP, body: value, method: 'POST' });
+      const res = await sendData({
+        url: API_URL.SIGNUP,
+        body: value,
+        method: 'POST',
+        showToast: false,
+      });
       // const res = await fetch('/api/user/signup', {
       //   method: 'POST',
       //   body: JSON.stringify(value),
@@ -44,7 +52,13 @@ export default function Login() {
       // });
       // TODO:when everything is completed donot take user in login make sure token is provided here
       console.log(res, 'login');
-      if (res) {
+      if (res?.error) {
+        toast.error(res?.error);
+        setLoading(false);
+      }
+      if (res?.status === 200) {
+        setLoading(false);
+        toast.success('user created successfully');
         router.push({
           pathname: AppLink.VERIFY_MAIL_MESSAGE,
         });
@@ -70,6 +84,7 @@ export default function Login() {
               setFormCompleted(true);
               handleSubmit(onSubmit);
             }}
+            loadng={loading}
           />
         </form>
       </FormProvider>

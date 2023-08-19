@@ -9,7 +9,7 @@ import { FormFieldGroupWrapper, FormHeading, InputFieldWrapper } from '@/shared/
 import { sendData } from '@/utils/send-data';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
@@ -20,7 +20,7 @@ export default function Login() {
   const [showEye, setShowEye] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const { email, pass, name } = query;
 
   const methods = useForm({
@@ -38,16 +38,19 @@ export default function Login() {
       method: 'POST',
       showToast: false,
     });
+    console.log('login-res', res);
     if (res?.token) {
       // localStorage.setItem('multi', res?.multi);
       Cookies.set('multi', res?.token);
       toast.success('successfully login');
+      push({
+        pathname: AppLink.WELCOME,
+      });
+      console.log('route');
       setLoading(false);
-      router.push('/');
     } else {
       setLoading(false);
-
-      toast.error('somthing went wrong please try again');
+      toast.error(res.message);
     }
   };
   return (

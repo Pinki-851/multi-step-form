@@ -16,6 +16,7 @@ export interface InputFieldWrapperProps extends HTMLAttributes<HTMLInputElement>
   isDisabled?: boolean;
   pattern?: any;
   helperText?: string | ReactNode;
+  autoComplete?: 'on' | 'off';
 }
 
 export function InputFieldWrapper(props: InputFieldWrapperProps) {
@@ -29,6 +30,7 @@ export function InputFieldWrapper(props: InputFieldWrapperProps) {
     isDisabled = false,
     register,
     helperText = '',
+    autoComplete = 'on',
     ...rest
   } = props;
 
@@ -48,6 +50,7 @@ export function InputFieldWrapper(props: InputFieldWrapperProps) {
         placeholder={placeholder}
         disabled={isDisabled}
         spellCheck={false}
+        autoComplete={autoComplete}
         {...register}
         {...rest}
         className={`${error && '!ring-red-600 dark:!ring-red-500'}`}

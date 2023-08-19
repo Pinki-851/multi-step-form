@@ -10,7 +10,7 @@ export default async function VerifyEmail(req: NextApiRequest, res: NextApiRespo
     }
     const { token } = req.body;
     console.log('verify-toke', token);
-    const user = await User.findOne({ verifyToken: token, verifyTokenExpiry: { $gt: Date.now() } });
+    const user = await User.findOne({ verifyToken: token });
 
     if (!user) {
       return res.status(400).json({ message: 'user not found' });

@@ -61,7 +61,7 @@ export const sendData = async (props: SendDataProps) => {
       }
       if (response.status === 400) {
         if (showToast) {
-          toast.error(`Data entered is invalid or a required field is missing ${response.text}`);
+          toast.error(`Error occur ${response.status}`);
         }
       }
       return response.json();

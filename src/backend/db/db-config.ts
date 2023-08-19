@@ -7,6 +7,7 @@ const options = {
 };
 export function connect() {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     mongoose.connect(MONGOURL!);
     const connection = mongoose.connection;
     console.log('connection');

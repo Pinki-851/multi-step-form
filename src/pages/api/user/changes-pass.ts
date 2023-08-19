@@ -13,7 +13,7 @@ export default async function ChangePass(req: NextApiRequest, res: NextApiRespon
     console.log('chnage-pass', token, password);
     const user = await User.findOne({
       forgotPasswordToken: token,
-      forgotPasswordTokenExpiry: { $gt: Date.now() },
+      // forgotPasswordTokenExpiry: { $gt: Date.now() },
     });
     console.log('chnage-pass-user', user);
 

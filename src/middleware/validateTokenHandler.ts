@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { TOKEN_SECRET } from '@/constants/base-url';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest } from 'next';
 
@@ -19,7 +20,7 @@ const validateToken = async (req: NextApiRequest) => {
 
     token = authHeader?.split(' ')[1];
     // token = Cookies.get('multi');
-    const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+    const decodedToken: any = jwt.verify(token, TOKEN_SECRET!);
     console.log('decodedtoken', token, decodedToken);
     return decodedToken?.data?.userId;
   } catch (err: any) {

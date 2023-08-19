@@ -27,6 +27,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const user = await User.findOne({ 'signUpDetails.email': email });
+    console.log('user', user);
     if (!user) {
       return res
         .status(400)

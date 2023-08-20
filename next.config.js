@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const customCookie = [
   {
     type: 'cookie',
@@ -9,6 +11,8 @@ const customCookie = [
 
 const nextConfig = {
   reactStrictMode: true,
+  distDir: isProd ? `/${process.env.DIST_DIR}` : '.next',
+
   async redirects() {
     return [
       {
